@@ -1,0 +1,82 @@
+/* ==========================================================
+   CONFIG.JS
+   Configuração Global - Passatempo Yokimbo
+   ========================================================== */
+
+/**
+ * Ambiente da aplicação
+ * development = testes locais
+ * production  = ambiente real
+ */
+const APP_CONFIG = {
+
+    // ======================================================
+    // Ambiente
+    // ======================================================
+    environment: 'development',
+
+    // ======================================================
+    // API
+    // ======================================================
+    api: {
+        url: 'https://SEU_BACKEND.com/api/participacao',
+        method: 'POST',
+        timeout: 30000
+    },
+
+    // ======================================================
+    // Cloudflare Turnstile
+    // ======================================================
+    turnstile: {
+        siteKey: 'SEU_SITEKEY_AQUI'
+    },
+
+    // ======================================================
+    // Passatempo
+    // ======================================================
+    promotion: {
+        endDate: new Date('2026-07-31T23:59:59')
+    },
+
+    // ======================================================
+    // Redirecionamento
+    // ======================================================
+    redirect: {
+        success: 'obrigado.html'
+    },
+
+    // ======================================================
+    // Local Storage (apenas desenvolvimento)
+    // ======================================================
+    storage: {
+        entries: 'yokimbo_dev_entries'
+    }
+
+};
+
+/**
+ * Utilitário
+ */
+const APP_UTILS = {
+
+    isDevelopment() {
+        return APP_CONFIG.environment === 'development';
+    },
+
+    isProduction() {
+        return APP_CONFIG.environment === 'production';
+    }
+
+};
+
+Object.freeze(APP_CONFIG);
+Object.freeze(APP_UTILS);
+
+console.log(
+    `%cYokimbo`,
+    "color:#2FA84F;font-size:16px;font-weight:bold;"
+);
+
+console.log(
+    `Ambiente: ${APP_CONFIG.environment}`
+);

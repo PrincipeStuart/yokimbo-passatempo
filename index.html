@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Passatempo Oficial Yokimbo - Ganhe um saco de Farinha de Milho Yokimbo 25 KG">
+    <meta name="theme-color" content="#2FA84F">
+    
+    <title>Passatempo Yokimbo | Ganhe um saco de Farinha de Milho 25 KG</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Cloudflare Turnstile -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="assets/logo.png" alt="Yokimbo - Derivados de Milho" class="logo-img">
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Passatempo Oficial Yokimbo</h1>
+                <p class="hero-subtitle">Participe no passatempo Yokimbo e habilite-se a ganhar um saco de Farinha de Milho Yokimbo 25 KG</p>
+                
+                <div class="hero-prize">
+                    <img src="assets/premio.png" alt="Saco de Farinha Yokimbo 25KG" class="prize-image">
+                </div>
+                
+                <button class="btn btn-primary btn-large" onclick="scrollToForm()">
+                    Participar Agora
+                </button>
+                
+                <p class="hero-urgency">⏰ Promoção por tempo limitado</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- COUNTDOWN -->
+    <section class="countdown-section">
+        <div class="container">
+            <h2 class="section-title">Tempo Restante</h2>
+            <div class="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-value" id="days">00</div>
+                    <div class="countdown-label">Dias</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="hours">00</div>
+                    <div class="countdown-label">Horas</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="minutes">00</div>
+                    <div class="countdown-label">Minutos</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="seconds">00</div>
+                    <div class="countdown-label">Segundos</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMO PARTICIPAR -->
+    <section class="how-to-section">
+        <div class="container">
+            <h2 class="section-title">Como Participar</h2>
+            <div class="steps-grid">
+                
+                <!-- PASSO 1 -->
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Siga no Instagram</h3>
+                    <p class="step-description">Siga a Yokimbo no Instagram para estar sempre atualizado com as novidades.</p>
+                    <a href="https://www.instagram.com/yokimboo/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                        Seguir Agora
+                    </a>
+                </div>
+                
+                <!-- PASSO 2 -->
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Siga no LinkedIn</h3>
+                    <p class="step-description">Siga a Yokimbo no LinkedIn para acompanhar as atividades profissionais.</p>
+                    <a href="https://www.linkedin.com/in/yokimbo-fonseca-irm%C3%A3os-ind%C3%BAstria-sa-bb4687336/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                        Seguir Agora
+                    </a>
+                </div>
+                
+                <!-- PASSO 3 -->
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Responder ao Formulário</h3>
+                    <p class="step-description">Preencha o formulário abaixo com seus dados para participar no passatempo.</p>
+                    <button class="btn btn-secondary" onclick="scrollToForm()">
+                        Preencher Formulário
+                    </button>
+                </div>
+                
+                <!-- PASSO 4 -->
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Comentar no Instagram</h3>
+                    <p class="step-description">Comente a resposta correta na publicação oficial do passatempo no Instagram da Yokimbo.</p>
+                    <a href="https://www.instagram.com/yokimboo/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                        Ir para Instagram
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- FORMULÁRIO -->
+    <section class="form-section" id="form-section">
+        <div class="container">
+            <h2 class="section-title">Formulário de Participação</h2>
+            <div class="form-wrapper">
+                <form id="participationForm" class="form">
+                    
+                    <!-- Nome Completo -->
+                    <div class="form-group">
+                        <label for="fullName" class="form-label">Nome Completo *</label>
+                        <input 
+                            type="text" 
+                            id="fullName" 
+                            name="fullName" 
+                            class="form-input" 
+                            placeholder="Introduza o seu nome completo"
+                            required
+                        >
+                        <span class="form-error" id="error-fullName"></span>
+                    </div>
+                    
+                    <!-- Telefone -->
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Telefone *</label>
+                        <input 
+                            type="tel" 
+                            id="phone" 
+                            name="phone" 
+                            class="form-input" 
+                            placeholder="Exemplo: +244 923 456 789"
+                            required
+                        >
+                        <span class="form-error" id="error-phone"></span>
+                    </div>
+                    
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email (Opcional)</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-input" 
+                            placeholder="seu.email@exemplo.com"
+                        >
+                        <span class="form-error" id="error-email"></span>
+                    </div>
+                    
+                    <!-- Província -->
+                    <div class="form-group">
+                        <label for="province" class="form-label">Província *</label>
+                        <select id="province" name="province" class="form-input" required>
+                            <option value="">Selecione uma província</option>
+                            <option value="Bengo">Bengo</option>
+                            <option value="Benguela">Benguela</option>
+                            <option value="Bié">Bié</option>
+                            <option value="Cabinda">Cabinda</option>
+                            <option value="Cuando Cubango">Cuando Cubango</option>
+                            <option value="Cuanza Norte">Cuanza Norte</option>
+                            <option value="Cuanza Sul">Cuanza Sul</option>
+                            <option value="Cunene">Cunene</option>
+                            <option value="Huambo">Huambo</option>
+                            <option value="Huíla">Huíla</option>
+                            <option value="Luanda">Luanda</option>
+                            <option value="Lunda Norte">Lunda Norte</option>
+                            <option value="Lunda Sul">Lunda Sul</option>
+                            <option value="Malange">Malange</option>
+                            <option value="Moxico">Moxico</option>
+                            <option value="Namibe">Namibe</option>
+                            <option value="Uíge">Uíge</option>
+                            <option value="Zaire">Zaire</option>
+                        </select>
+                        <span class="form-error" id="error-province"></span>
+                    </div>
+                    
+                    <!-- Instagram -->
+                    <div class="form-group">
+                        <label for="instagram" class="form-label">Utilizador do Instagram *</label>
+                        <input 
+                            type="text" 
+                            id="instagram" 
+                            name="instagram" 
+                            class="form-input" 
+                            placeholder="@seu_utilizador"
+                            required
+                        >
+                        <span class="form-error" id="error-instagram"></span>
+                    </div>
+                    
+                    <!-- Como Conheceu -->
+                    <div class="form-group">
+                        <label for="origin" class="form-label">Como conheceu a Yokimbo? *</label>
+                        <select id="origin" name="origin" class="form-input" required>
+                            <option value="">Selecione uma opção</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="FILDA">FILDA</option>
+                            <option value="Supermercado">Supermercado</option>
+                            <option value="Amigos">Amigos</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                        <span class="form-error" id="error-origin"></span>
+                    </div>
+                    
+                    <!-- Checkbox de Confirmação -->
+                    <div class="form-group form-checkbox">
+                        <input 
+                            type="checkbox" 
+                            id="confirm" 
+                            name="confirm" 
+                            class="form-checkbox-input"
+                            required
+                        >
+                        <label for="confirm" class="form-checkbox-label">
+                            Confirmo que segui a Yokimbo no Instagram e LinkedIn. Após enviar os meus dados, também participarei comentando a resposta correta na publicação oficial do passatempo. *
+                        </label>
+                        <span class="form-error" id="error-confirm"></span>
+                    </div>
+                    
+                    <!-- Cloudflare Turnstile -->
+                    <div class="form-group">
+                        <div class="cf-turnstile" data-sitekey="SEU_SITEKEY_AQUI" data-theme="light"></div>
+                        <span class="form-error" id="error-turnstile"></span>
+                    </div>
+                    
+                    <!-- Botão Enviar -->
+                    <button type="submit" class="btn btn-primary btn-large" id="submitBtn">
+                        Participar
+                    </button>
+                    
+                    <p class="form-notice">* Campos obrigatórios</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 Yokimbo - Fonseca & Irmãos Indústria SA. Todos os direitos reservados.</p>
+                <div class="footer-links">
+                    <a href="https://www.instagram.com/yokimboo/" target="_blank" rel="noopener noreferrer">Instagram</a>
+                    <a href="https://www.linkedin.com/in/yokimbo-fonseca-irm%C3%A3os-ind%C3%BAstria-sa-bb4687336/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOADING OVERLAY -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p>A enviar a sua participação...</p>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/countdown.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/submit.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

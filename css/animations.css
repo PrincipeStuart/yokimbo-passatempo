@@ -1,0 +1,544 @@
+/* ================================================
+   ANIMAÇÕES - Yokimbo Passatempo
+   ================================================ */
+
+/* ================================================
+   FADE IN
+   ================================================ */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* ================================================
+   SLIDE UP
+   ================================================ */
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-up {
+    animation: slideUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ================================================
+   SLIDE DOWN
+   ================================================ */
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-down {
+    animation: slideDown 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ================================================
+   ZOOM IN
+   ================================================ */
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.zoom-in {
+    animation: zoomIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ================================================
+   SCALE UP
+   ================================================ */
+
+@keyframes scaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.scale-up {
+    animation: scaleUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ================================================
+   PULSE - Glow (Destaque elegante)
+   ================================================ */
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(47, 168, 79, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(47, 168, 79, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(47, 168, 79, 0);
+    }
+}
+
+.pulse-glow {
+    animation: pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ================================================
+   SPIN (Loading)
+   ================================================ */
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spin {
+    animation: spin 0.8s linear infinite;
+}
+
+/* ================================================
+   STAGGER - Entrada em cascata
+   ================================================ */
+
+.stagger-item {
+    animation: slideUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.stagger-item:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.stagger-item:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.stagger-item:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.stagger-item:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.stagger-item:nth-child(5) {
+    animation-delay: 0.4s;
+}
+
+.stagger-item:nth-child(6) {
+    animation-delay: 0.5s;
+}
+
+/* ================================================
+   FLOAT (Flutuação suave)
+   ================================================ */
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.float {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* ================================================
+   FOCUS GLOW (Campos de formulário)
+   ================================================ */
+
+@keyframes focusGlow {
+    from {
+        box-shadow: 0 0 0 0 rgba(47, 168, 79, 0.3);
+    }
+    to {
+        box-shadow: 0 0 0 8px rgba(47, 168, 79, 0);
+    }
+}
+
+.focus-glow:focus {
+    animation: focusGlow 0.4s ease-out;
+}
+
+/* ================================================
+   LIFT (Efeito de elevação)
+   ================================================ */
+
+@keyframes lift {
+    from {
+        transform: translateY(0);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+    }
+    to {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.lift:hover {
+    animation: lift 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* ================================================
+   BOUNCE (Efeito suave)
+   ================================================ */
+
+@keyframes bounceGentle {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+.bounce-gentle {
+    animation: bounceGentle 1s cubic-bezier(0.36, 0, 0.66, -0.56) infinite;
+}
+
+/* ================================================
+   SHAKE (Validação - Erro)
+   ================================================ */
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-4px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(4px);
+    }
+}
+
+.shake {
+    animation: shake 0.4s cubic-bezier(0.36, 0, 0.66, -0.56);
+}
+
+/* ================================================
+   HERO ANIMATIONS
+   ================================================ */
+
+.hero-title {
+    animation: slideDown 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hero-subtitle {
+    animation: slideUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation-delay: 0.1s;
+    animation-fill-mode: both;
+}
+
+.hero-prize {
+    animation: zoomIn 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation-delay: 0.2s;
+    animation-fill-mode: both;
+}
+
+.prize-image {
+    animation: float 3.5s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+.hero-urgency {
+    animation: fadeIn 0.6s ease-out;
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
+}
+
+/* ================================================
+   BOTÃO PRINCIPAL - Entrada elegante (sem pulse infinito)
+   ================================================ */
+
+.hero .btn-primary {
+    animation: slideUp 0.6s ease-out;
+    animation-delay: 0.4s;
+    animation-fill-mode: both;
+}
+
+/* ================================================
+   STEPS CARDS - Stagger Entrada
+   ================================================ */
+
+.step-card {
+    animation: slideUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.step-card:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.step-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.step-card:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.step-card:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+/* ================================================
+   COUNTDOWN ITEMS - Animação
+   ================================================ */
+
+.countdown-item {
+    animation: scaleUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.countdown-item:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.countdown-item:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.countdown-item:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.countdown-item:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+/* ================================================
+   FORM SECTION - Entrada
+   ================================================ */
+
+.form-wrapper {
+    animation: slideUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.form-group {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.form-group:nth-child(1) {
+    animation-delay: 0.1s;
+    animation-fill-mode: both;
+}
+
+.form-group:nth-child(2) {
+    animation-delay: 0.2s;
+    animation-fill-mode: both;
+}
+
+.form-group:nth-child(3) {
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
+}
+
+/* ================================================
+   FORMULÁRIO - Focus & Input
+   ================================================ */
+
+.form-input {
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    animation: focusGlow 0.4s ease-out;
+}
+
+/* ================================================
+   TRANSIÇÕES HOVER - Botões
+   ================================================ */
+
+.btn {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ================================================
+   COUNTDOWN - Hover Animation
+   ================================================ */
+
+.countdown-item {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ================================================
+   ANIMATION DELAYS - Utilitários
+   ================================================ */
+
+.animation-delay-100 {
+    animation-delay: 100ms;
+}
+
+.animation-delay-200 {
+    animation-delay: 200ms;
+}
+
+.animation-delay-300 {
+    animation-delay: 300ms;
+}
+
+.animation-delay-500 {
+    animation-delay: 500ms;
+}
+
+.animation-delay-700 {
+    animation-delay: 700ms;
+}
+
+.animation-delay-1000 {
+    animation-delay: 1000ms;
+}
+
+/* ================================================
+   ACCESSIBILITY - Reduced Motion
+   ================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    /* Manter transições suaves mas sem animações */
+    .btn {
+        transition: all 0.15s ease;
+    }
+
+    .form-input {
+        transition: all 0.15s ease;
+    }
+
+    .countdown-item {
+        transition: all 0.15s ease;
+    }
+
+    .step-card {
+        transition: all 0.15s ease;
+    }
+}
+
+/* ================================================
+   LOADING OVERLAY - Animação
+   ================================================ */
+
+.loading-overlay {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.loading-overlay.show {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+.spinner {
+    animation: spin 0.8s linear infinite;
+}
+
+.loading-overlay p {
+    animation: fadeIn 0.6s ease-out;
+    animation-delay: 0.2s;
+    animation-fill-mode: both;
+}
+
+/* ================================================
+   TRANSIÇÕES BASE - Smooth Experience
+   ================================================ */
+
+a {
+    transition: color 0.3s ease;
+}
+
+input:not([type="checkbox"]),
+select,
+textarea {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+/* ================================================
+   VALIDAÇÃO VISUAL
+   ================================================ */
+
+.form-input.error {
+    animation: shake 0.4s cubic-bezier(0.36, 0, 0.66, -0.56);
+}
+
+.form-error.show {
+    animation: slideDown 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ================================================
+   SUCCESS ANIMATIONS (para obrigado.html)
+   ================================================ */
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.success-card {
+    animation: slideUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.success-icon {
+    animation: zoomIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation-delay: 0.1s;
+    animation-fill-mode: both;
+}
+
+.success-title {
+    animation: slideDown 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    animation-delay: 0.2s;
+    animation-fill-mode: both;
+}
+
+.success-message {
+    animation: fadeIn 0.6s ease-out;
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
+}

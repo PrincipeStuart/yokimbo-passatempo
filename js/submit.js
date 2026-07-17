@@ -1,6 +1,6 @@
 // ==================================================
-// SUBMIT.JS - ENVIO DO FORMULÁRIO YOKIMBO
-// Integração Firebase Firestore
+// SUBMIT.JS - ENVIO DE PARTICIPAÇÕES YOKIMBO
+// Com proteção contra duplicados por telefone
 // ==================================================
 
 import { db } from "./firebase.js";
@@ -8,218 +8,222 @@ import { db } from "./firebase.js";
 import {
     collection,
     addDoc,
+    query,
+    where,
+    getDocs,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
-document.addEventListener("DOMContentLoaded", () => {
+console.log("✅ Submit iniciado");
 
-    const form = document.getElementById("participationForm");
-    const submitBtn = document.getElementById("submitBtn");
 
 
-    if (!form) {
-        console.error("❌ Formulário não encontrado");
-        return;
-    }
+const form = document.getElementById("participationForm");
 
 
-    form.addEventListener("submit", async (event) => {
 
-        event.preventDefault();
+if(form){
 
 
-        try {
+form.addEventListener(
+"submit",
+async (event)=>{
 
 
-            // Bloquear botão durante envio
+event.preventDefault();
 
-            if (submitBtn) {
 
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = "A enviar...";
 
-            }
+try{
 
 
+const fullName =
+document.getElementById("fullName").value.trim();
 
-            const participant = {
 
-                fullName:
-                document.getElementById("fullName")
-                .value
-                .trim(),
+const email =
+document.getElementById("email").value.trim();
 
 
-                phone:
-                normalizePhone(
-                    document.getElementById("phone").value
-                ),
+const phoneInput =
+document.getElementById("phone").value.trim();
 
 
-                email:
-                document.getElementById("email")
-                .value
-                .trim(),
+const province =
+document.getElementById("province").value;
 
 
-                province:
-                document.getElementById("province")
-                .value,
+const instagram =
+document.getElementById("instagram").value.trim();
 
 
-                instagram:
-                document.getElementById("instagram")
-                .value
-                .trim(),
+const origin =
+document.getElementById("origin").value;
 
 
-                origin:
-                document.getElementById("origin")
-                .value,
 
 
-                status:
-                "active",
+// Normalizar telefone
 
+const phone =
+normalizePhone(phoneInput);
 
-                createdAt:
-                serverTimestamp()
 
-            };
 
+console.log(
+"Telefone normalizado:",
+phone
+);
 
 
-            console.log(
-                "📤 Enviando participação:",
-                participant
-            );
 
+// Verificar duplicado
 
+const participantsRef =
+collection(db,"participants");
 
-            await addDoc(
-                collection(db, "participants"),
-                participant
-            );
 
 
+const phoneQuery =
+query(
+participantsRef,
+where(
+"phone",
+"==",
+phone
+)
+);
 
-            console.log(
-                "✅ Participação guardada com sucesso"
-            );
 
 
+const existing =
+await getDocs(phoneQuery);
 
-            showSuccess();
 
 
+if(!existing.empty){
 
-            form.reset();
 
+alert(
+"Este número já possui uma participação registada."
+);
 
 
-        } catch(error) {
+return;
 
 
-            console.error(
-                "❌ Erro ao enviar participação:",
-                error
-            );
+}
 
 
-            showFormError(
-                "Ocorreu um erro ao enviar. Tente novamente."
-            );
 
+// Criar participação
 
-        } finally {
 
+await addDoc(
+participantsRef,
+{
 
-            if (submitBtn) {
 
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = "Participar";
+fullName,
 
-            }
+email,
 
+phone,
 
-        }
+province,
 
+instagram,
 
-    });
+origin,
+
+
+status:"active",
+
+
+createdAt:
+serverTimestamp()
+
+
+}
+);
+
+
+
+alert(
+"Participação enviada com sucesso!"
+);
+
+
+
+form.reset();
+
+
+
+}
+catch(error){
+
+
+console.error(
+"❌ Erro ao enviar participação:",
+error
+);
+
+
+
+alert(
+"Ocorreu um erro ao enviar. Tente novamente."
+);
+
+
+
+}
+
 
 
 });
 
 
 
-
-// Normalizar telefone apenas no envio
-
-function normalizePhone(phone) {
-
-    return phone
-        .replace(/\s+/g, "")
-        .replace(/-/g, "");
-
 }
 
 
 
 
-// Mensagem de sucesso
 
-function showSuccess() {
-
-
-    const successMessage =
-    document.createElement("div");
+function normalizePhone(phone){
 
 
-    successMessage.className =
-    "success-message";
-
-
-    successMessage.innerHTML = `
-
-        <h3>
-            🎉 Participação enviada com sucesso!
-        </h3>
-
-        <p>
-            Agora só falta comentar a resposta correta
-            na publicação oficial do passatempo no Instagram da Yokimbo.
-        </p>
-
-    `;
+let clean =
+phone.replace(
+/[^0-9]/g,
+""
+);
 
 
 
-    const formWrapper =
-    document.querySelector(".form-wrapper");
+if(
+clean.startsWith("244")
+){
 
-
-    if (formWrapper) {
-
-        formWrapper.innerHTML = "";
-
-        formWrapper.appendChild(successMessage);
-
-    }
-
+return "+" + clean;
 
 }
 
 
 
+if(
+clean.startsWith("9")
+){
 
-// Mensagem de erro
+return "+244" + clean;
 
-function showFormError(message) {
+}
 
 
-    alert(message);
+
+return "+" + clean;
 
 
 }

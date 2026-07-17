@@ -3,8 +3,6 @@
 // Integração Firebase Firestore
 // ==================================================
 
-
-// Importar Firebase
 import { db } from "./firebase.js";
 
 import {
@@ -14,11 +12,11 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-// Aguarda carregamento do formulário
 
 document.addEventListener("DOMContentLoaded", () => {
 
     const form = document.getElementById("participationForm");
+    const submitBtn = document.getElementById("submitBtn");
 
 
     if (!form) {
@@ -34,10 +32,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
 
+
+            // Bloquear botão durante envio
+
+            if (submitBtn) {
+
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = "A enviar...";
+
+            }
+
+
+
             const participant = {
 
                 fullName:
-                document.getElementById("fullName").value.trim(),
+                document.getElementById("fullName")
+                .value
+                .trim(),
 
 
                 phone:
@@ -47,19 +59,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 email:
-                document.getElementById("email").value.trim(),
+                document.getElementById("email")
+                .value
+                .trim(),
 
 
                 province:
-                document.getElementById("province").value,
+                document.getElementById("province")
+                .value,
 
 
                 instagram:
-                document.getElementById("instagram").value.trim(),
+                document.getElementById("instagram")
+                .value
+                .trim(),
 
 
                 origin:
-                document.getElementById("origin").value,
+                document.getElementById("origin")
+                .value,
 
 
                 status:
@@ -72,10 +90,12 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
 
+
             console.log(
                 "📤 Enviando participação:",
                 participant
             );
+
 
 
             await addDoc(
@@ -84,12 +104,15 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
+
             console.log(
                 "✅ Participação guardada com sucesso"
             );
 
 
+
             showSuccess();
+
 
 
             form.reset();
@@ -109,16 +132,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Ocorreu um erro ao enviar. Tente novamente."
             );
 
+
+        } finally {
+
+
+            if (submitBtn) {
+
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = "Participar";
+
+            }
+
+
         }
 
+
     });
+
 
 });
 
 
 
-// Normalização do telefone
-// Apenas no envio
+
+// Normalizar telefone apenas no envio
 
 function normalizePhone(phone) {
 
@@ -135,11 +172,45 @@ function normalizePhone(phone) {
 
 function showSuccess() {
 
-    alert(
-        "Participação enviada com sucesso! Boa sorte."
-    );
+
+    const successMessage =
+    document.createElement("div");
+
+
+    successMessage.className =
+    "success-message";
+
+
+    successMessage.innerHTML = `
+
+        <h3>
+            🎉 Participação enviada com sucesso!
+        </h3>
+
+        <p>
+            Agora só falta comentar a resposta correta
+            na publicação oficial do passatempo no Instagram da Yokimbo.
+        </p>
+
+    `;
+
+
+
+    const formWrapper =
+    document.querySelector(".form-wrapper");
+
+
+    if (formWrapper) {
+
+        formWrapper.innerHTML = "";
+
+        formWrapper.appendChild(successMessage);
+
+    }
+
 
 }
+
 
 
 
@@ -147,6 +218,8 @@ function showSuccess() {
 
 function showFormError(message) {
 
+
     alert(message);
+
 
 }

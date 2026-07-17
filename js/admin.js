@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const loading = document.getElementById("loading");
     const table = document.getElementById("participantsTable");
     const exportBtn = document.getElementById("exportBtn");
+    console.log("Botão CSV:", exportBtn);
 
 
 

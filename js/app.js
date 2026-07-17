@@ -98,32 +98,6 @@ function initApp() {
 
 
 
-    // Inicializar envio
-
-    try {
-
-        if (typeof initSubmit === 'function') {
-
-            initSubmit();
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            'Erro ao iniciar submit:',
-            error
-        );
-
-    }
-
-
-    console.log('✅ Aplicação Yokimbo carregada com sucesso');
-
-}
-
-
-
 // ================================================
 // Executar quando página carregar
 // ================================================

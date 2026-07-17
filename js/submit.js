@@ -5,18 +5,12 @@
 
 
 // Importar Firebase
-import { 
-    db 
-} from "./firebase.js";
-
+import { db } from "./firebase.js";
 
 import {
     collection,
     addDoc,
-    serverTimestamp,
-    query,
-    where,
-    getDocs
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
@@ -25,6 +19,7 @@ import {
 document.addEventListener("DOMContentLoaded", () => {
 
     const form = document.getElementById("participationForm");
+
 
     if (!form) {
         console.error("❌ Formulário não encontrado");
@@ -39,26 +34,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
 
-            // Recolher dados
-
             const participant = {
 
                 fullName:
                 document.getElementById("fullName").value.trim(),
+
 
                 phone:
                 normalizePhone(
                     document.getElementById("phone").value
                 ),
 
+
                 email:
                 document.getElementById("email").value.trim(),
+
 
                 province:
                 document.getElementById("province").value,
 
+
                 instagram:
                 document.getElementById("instagram").value.trim(),
+
 
                 origin:
                 document.getElementById("origin").value,
@@ -74,29 +72,11 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
 
-            // Verificar telefone duplicado
-
-            const duplicateQuery = query(
-                collection(db, "participants"),
-                where("phone", "==", participant.phone)
+            console.log(
+                "📤 Enviando participação:",
+                participant
             );
 
-
-            const duplicateResult = await getDocs(duplicateQuery);
-
-
-            if (!duplicateResult.empty) {
-
-                showFormError(
-                    "Este número já participou no passatempo."
-                );
-
-                return;
-            }
-
-
-
-            // Guardar no Firestore
 
             await addDoc(
                 collection(db, "participants"),
@@ -105,8 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             console.log(
-                "✅ Participação guardada:",
-                participant
+                "✅ Participação guardada com sucesso"
             );
 
 
@@ -132,12 +111,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
     });
 
-
 });
-
 
 
 
@@ -159,14 +135,11 @@ function normalizePhone(phone) {
 
 function showSuccess() {
 
-
     alert(
         "Participação enviada com sucesso! Boa sorte."
     );
 
-
 }
-
 
 
 
@@ -174,8 +147,6 @@ function showSuccess() {
 
 function showFormError(message) {
 
-
     alert(message);
-
 
 }

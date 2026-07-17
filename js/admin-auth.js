@@ -1,3 +1,8 @@
+// ==================================================
+// ADMIN-AUTH.JS
+// Proteção do painel administrativo Yokimbo
+// ==================================================
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
@@ -30,23 +35,20 @@ const auth = getAuth(app);
 
 
 
-onAuthStateChanged(auth, (user)=>{
+onAuthStateChanged(auth, (user) => {
 
 
-    const loading =
-    document.getElementById("authLoading");
+    const loading = document.getElementById("authLoading");
 
-
-    const content =
-    document.getElementById("adminContent");
+    const content = document.getElementById("adminContent");
 
 
 
-    if(user){
+    if (user) {
 
 
         console.log(
-            "✅ Administrador autenticado:",
+            "✅ Sessão encontrada:",
             user.email
         );
 
@@ -60,7 +62,7 @@ onAuthStateChanged(auth, (user)=>{
 
         if(loading){
 
-            loading.style.display = "none";
+            loading.remove();
 
         }
 
@@ -69,8 +71,12 @@ onAuthStateChanged(auth, (user)=>{
     } else {
 
 
-        window.location.href =
-        "login.html";
+        console.log(
+            "⚠️ Sem sessão. Redirecionando..."
+        );
+
+
+        window.location.href = "login.html";
 
 
     }

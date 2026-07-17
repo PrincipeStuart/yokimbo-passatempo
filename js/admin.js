@@ -1,47 +1,29 @@
-// ==================================================
-// ADMIN.JS - PAINEL DE PARTICIPANTES YOKIMBO
-// ==================================================
-
-
 import { db } from "./firebase.js";
-
 
 import {
     collection,
-    getDocs,
-    query,
-    orderBy
+    getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 
 
 document.addEventListener("DOMContentLoaded", async () => {
 
 
-    const table = document.getElementById("participantsTable");
     const body = document.getElementById("participantsBody");
     const total = document.getElementById("total");
     const loading = document.getElementById("loading");
-
+    const table = document.getElementById("participantsTable");
 
 
     try {
 
 
-        const participantsQuery = query(
-            collection(db, "participants"),
-            orderBy("createdAt", "desc")
-        );
-
-
         const snapshot = await getDocs(
-            participantsQuery
+            collection(db, "participants")
         );
-
 
 
         let count = 0;
-
 
 
         snapshot.forEach((doc) => {
@@ -49,46 +31,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const data = doc.data();
 
-
             count++;
-
 
 
             const row = document.createElement("tr");
 
 
-            let date = "-";
-
-
-            if (data.createdAt) {
-
-                date =
-                data.createdAt
-                .toDate()
-                .toLocaleString("pt-PT");
-
-            }
-
-
-
             row.innerHTML = `
 
-                <td>${data.fullName || "-"}</td>
-
-                <td>${data.phone || "-"}</td>
-
-                <td>${data.email || "-"}</td>
-
-                <td>${data.province || "-"}</td>
-
-                <td>${data.instagram || "-"}</td>
-
-                <td>${data.origin || "-"}</td>
-
-                <td>${date}</td>
+            <td>${data.fullName || "-"}</td>
+            <td>${data.phone || "-"}</td>
+            <td>${data.email || "-"}</td>
+            <td>${data.province || "-"}</td>
+            <td>${data.instagram || "-"}</td>
+            <td>${data.origin || "-"}</td>
 
             `;
-
 
 
             body.appendChild(row);
@@ -98,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
-        total.innerHTML = count;
+        total.textContent = count;
 
 
         loading.style.display = "none";
@@ -106,11 +64,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         table.style.display = "table";
 
 
-
         console.log(
-            "✅ Painel carregado:",
-            count,
-            "participantes"
+            "✅ Participantes encontrados:",
+            count
         );
 
 
@@ -119,13 +75,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         console.error(
-            "❌ Erro ao carregar participantes:",
+            "❌ Erro:",
             error
         );
 
 
-        loading.innerHTML =
-        "Erro ao carregar participantes.";
+        loading.textContent =
+        "Erro ao carregar dados";
 
 
     }

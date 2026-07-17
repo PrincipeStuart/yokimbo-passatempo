@@ -106,7 +106,33 @@
             }
 
         }
+.actions {
 
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+
+}
+
+
+.actions button {
+
+    background: #2FA84F;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+
+}
+
+
+.actions button:hover {
+
+    opacity: 0.85;
+
+}
 
     </style>
 
@@ -134,7 +160,17 @@
     </button>
 
 </div>
+<div class="actions">
 
+    <button id="exportBtn">
+        Exportar CSV
+    </button>
+
+    <button onclick="location.reload()">
+        Atualizar
+    </button>
+
+</div>
 <div class="stats">
 
     <p>Total de participantes</p>

@@ -13,6 +13,10 @@ import {
 
 
 
+let participantsData = [];
+
+
+
 document.addEventListener("DOMContentLoaded", async () => {
 
 
@@ -20,6 +24,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const total = document.getElementById("total");
     const loading = document.getElementById("loading");
     const table = document.getElementById("participantsTable");
+    const exportBtn = document.getElementById("exportBtn");
+
 
 
     try {
@@ -34,6 +40,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const snapshot = await getDocs(
             participantsQuery
         );
+
 
 
         let count = 0;
@@ -54,34 +61,55 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (data.createdAt) {
 
-                date = data.createdAt
-                    .toDate()
-                    .toLocaleString("pt-PT");
+                date =
+                data.createdAt
+                .toDate()
+                .toLocaleString("pt-PT");
 
             }
+
+
+
+            const participant = {
+
+                nome: data.fullName || "-",
+                telefone: data.phone || "-",
+                email: data.email || "-",
+                provincia: data.province || "-",
+                instagram: data.instagram || "-",
+                origem: data.origin || "-",
+                data: date
+
+            };
+
+
+
+            participantsData.push(participant);
 
 
 
             const row = document.createElement("tr");
 
 
+
             row.innerHTML = `
 
-                <td>${data.fullName || "-"}</td>
+                <td>${participant.nome}</td>
 
-                <td>${data.phone || "-"}</td>
+                <td>${participant.telefone}</td>
 
-                <td>${data.email || "-"}</td>
+                <td>${participant.email}</td>
 
-                <td>${data.province || "-"}</td>
+                <td>${participant.provincia}</td>
 
-                <td>${data.instagram || "-"}</td>
+                <td>${participant.instagram}</td>
 
-                <td>${data.origin || "-"}</td>
+                <td>${participant.origem}</td>
 
-                <td>${date}</td>
+                <td>${participant.data}</td>
 
             `;
+
 
 
             body.appendChild(row);
@@ -109,6 +137,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
+        if(exportBtn){
+
+            exportBtn.addEventListener(
+                "click",
+                exportCSV
+            );
+
+        }
+
+
+
     } catch(error) {
 
 
@@ -126,3 +165,65 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 });
+
+
+
+
+
+function exportCSV(){
+
+
+    if(participantsData.length === 0){
+
+        alert(
+            "Não existem participantes para exportar."
+        );
+
+        return;
+
+    }
+
+
+
+    let csv = 
+    "Nome,Telefone,Email,Provincia,Instagram,Origem,Data\n";
+
+
+
+    participantsData.forEach((p)=>{
+
+
+        csv +=
+        `"${p.nome}","${p.telefone}","${p.email}","${p.provincia}","${p.instagram}","${p.origem}","${p.data}"\n`;
+
+
+    });
+
+
+
+    const blob = new Blob(
+        [csv],
+        {
+            type:"text/csv;charset=utf-8;"
+        }
+    );
+
+
+
+    const link = document.createElement("a");
+
+
+    link.href =
+    URL.createObjectURL(blob);
+
+
+
+    link.download =
+    "participantes-yokimbo.csv";
+
+
+
+    link.click();
+
+
+}

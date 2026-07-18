@@ -1,5 +1,4 @@
 import { db } from './firebase.js';
-import { validateParticipantForm } from './validation.js';
 import {
   doc,
   getDoc,
@@ -17,23 +16,35 @@ let isSubmitting = false;
 
 function getFormElements() {
   const form = document.getElementById('participationForm');
-  const submitButton = form ? form.querySelector('button[type="submit"]') : null;
-  const messageBox = document.getElementById('formMessage');
-  return { form, submitButton, messageBox };
+  const submitButton = document.getElementById('submitBtn');
+  return { form, submitButton };
 }
 
-function showMessage(messageBox, text, type) {
+function getFormMessageElement(form) {
+  let messageBox = document.getElementById('formMessage');
+  if (!messageBox && form) {
+    messageBox = document.createElement('p');
+    messageBox.id = 'formMessage';
+    messageBox.className = 'form-message';
+    form.appendChild(messageBox);
+  }
+  return messageBox;
+}
+
+function showFormMessage(message, type) {
+  const { form } = getFormElements();
+  const messageBox = getFormMessageElement(form);
   if (!messageBox) return;
-  messageBox.textContent = text;
+  messageBox.textContent = message;
   messageBox.className = `form-message form-message--${type}`;
-  messageBox.style.display = 'block';
 }
 
-function clearMessage(messageBox) {
-  if (!messageBox) return;
-  messageBox.textContent = '';
-  messageBox.className = 'form-message';
-  messageBox.style.display = 'none';
+function clearFormMessage() {
+  const messageBox = document.getElementById('formMessage');
+  if (messageBox) {
+    messageBox.textContent = '';
+    messageBox.className = 'form-message';
+  }
 }
 
 function setSubmittingState(submitButton, submitting) {
@@ -46,8 +57,25 @@ function setSubmittingState(submitButton, submitting) {
     submitButton.textContent = 'Enviando...';
   } else {
     submitButton.disabled = false;
-    submitButton.textContent = submitButton.dataset.originalText || 'Participar Agora';
+    submitButton.textContent = submitButton.dataset.originalText || 'Participar';
   }
+}
+
+function getFieldValue(fieldId) {
+  const element = document.getElementById(fieldId);
+  if (!element) return '';
+  if (element.type === 'checkbox') {
+    return element.checked;
+  }
+  return element.value;
+}
+
+function getNormalizedPhone(rawPhone) {
+  const digits = typeof window.normalizePhone === 'function'
+    ? window.normalizePhone(rawPhone)
+    : rawPhone.replace(/\D/g, '');
+
+  return digits.startsWith('+') ? digits : `+${digits}`;
 }
 
 async function checkPhoneExists(normalizedPhone) {
@@ -57,6 +85,9 @@ async function checkPhoneExists(normalizedPhone) {
 }
 
 async function checkEmailExists(email) {
+  if (!email) {
+    return false;
+  }
   const participantsRef = collection(db, COLLECTION_NAME);
   const emailQuery = query(participantsRef, where('email', '==', email));
   const querySnap = await getDocs(emailQuery);
@@ -84,33 +115,29 @@ async function handleSubmit(event) {
     return;
   }
 
-  const { form, submitButton, messageBox } = getFormElements();
+  const { form, submitButton } = getFormElements();
   if (!form) {
     return;
   }
 
-  clearMessage(messageBox);
+  clearFormMessage();
 
-  const rawData = {
-    fullName: form.fullName.value,
-    phone: form.phone.value,
-    email: form.email.value,
-    province: form.province.value,
-    instagram: form.instagram.value,
-    origin: form.origin.value,
-    confirm: form.confirm.checked
-  };
+  const isValid = typeof window.validateForm === 'function' ? window.validateForm() : true;
 
-  const validationResult = validateParticipantForm(rawData);
-
-  if (!validationResult.valid) {
-    const firstErrorKey = Object.keys(validationResult.errors)[0];
-    showMessage(messageBox, validationResult.errors[firstErrorKey], 'error');
+  if (!isValid) {
     return;
   }
 
-  const normalizedData = validationResult.data;
-  const normalizedPhone = normalizedData.phone;
+  const rawPhone = getFieldValue('phone');
+  const normalizedPhone = getNormalizedPhone(rawPhone);
+
+  const participantData = {
+    fullName: getFieldValue('fullName'),
+    email: getFieldValue('email'),
+    province: getFieldValue('province'),
+    instagram: getFieldValue('instagram'),
+    origin: getFieldValue('origin')
+  };
 
   isSubmitting = true;
   setSubmittingState(submitButton, true);
@@ -118,29 +145,29 @@ async function handleSubmit(event) {
   try {
     const phoneExists = await checkPhoneExists(normalizedPhone);
     if (phoneExists) {
-      showMessage(messageBox, 'Este número já possui uma participação registada.', 'error');
+      showFormMessage('Este número já possui uma participação registada.', 'error');
       return;
     }
 
-    const emailExists = await checkEmailExists(normalizedData.email);
+    const emailExists = await checkEmailExists(participantData.email);
     if (emailExists) {
-      showMessage(messageBox, 'Este email já possui uma participação registada.', 'error');
+      showFormMessage('Este email já possui uma participação registada.', 'error');
       return;
     }
 
-    await saveParticipant(normalizedPhone, normalizedData);
+    await saveParticipant(normalizedPhone, participantData);
 
-    showMessage(messageBox, 'Participação registada com sucesso!', 'success');
+    showFormMessage('Participação registada com sucesso!', 'success');
     form.reset();
   } catch (error) {
-    showMessage(messageBox, 'Ocorreu um erro ao registar a participação. Tente novamente.', 'error');
+    showFormMessage('Ocorreu um erro ao registar a participação. Tente novamente.', 'error');
   } finally {
     isSubmitting = false;
     setSubmittingState(submitButton, false);
   }
 }
 
-export function initSubmitForm() {
+function initSubmitForm() {
   const { form } = getFormElements();
   if (!form) {
     return;

@@ -370,3 +370,88 @@ resetButton();
 
 
 });
+// ==================================================
+// Normalização do telefone
+// ==================================================
+
+
+function normalizePhone(phone){
+
+
+let clean =
+phone.replace(
+/[^0-9]/g,
+""
+);
+
+
+
+// Número já com código Angola
+
+if(
+clean.startsWith("244")
+){
+
+return "+" + clean;
+
+}
+
+
+
+// Número começa apenas com 9
+
+if(
+clean.startsWith("9")
+){
+
+return "+244" + clean;
+
+}
+
+
+
+// Fallback
+
+return "+" + clean;
+
+
+}
+
+
+
+
+
+// ==================================================
+// Restaurar botão
+// ==================================================
+
+
+function resetButton(){
+
+
+if(submitButton){
+
+
+submitButton.disabled = false;
+
+
+submitButton.textContent =
+"Participar Agora";
+
+
+}
+
+
+
+}
+
+
+
+// ==================================================
+// Fim do Submit.js
+// ==================================================
+
+
+console.log(
+"✅ Submit Yokimbo carregado"
+);

@@ -57,7 +57,7 @@ function setSubmittingState(submitButton, submitting) {
     submitButton.textContent = 'Enviando...';
   } else {
     submitButton.disabled = false;
-    submitButton.textContent = submitButton.dataset.originalText || 'Participar';
+    submitButton.textContent = submitButton.dataset.originalText || 'Enviar Candidatura';
   }
 }
 
@@ -118,6 +118,25 @@ function getErrorMessage(error) {
   return 'Ocorreu um erro ao registar a participação. Tente novamente.';
 }
 
+// ==================================================
+// PASSOS SEGUINTES
+// Esconde o formulário e revela a secção de próximos
+// passos depois de um registo bem sucedido.
+// ==================================================
+function showNextSteps() {
+  const formWrapper = document.querySelector('.form-wrapper');
+  const nextStepsSection = document.getElementById('nextStepsSection');
+
+  if (formWrapper) {
+    formWrapper.style.display = 'none';
+  }
+
+  if (nextStepsSection) {
+    nextStepsSection.style.display = 'block';
+    nextStepsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
 async function handleSubmit(event) {
   event.preventDefault();
 
@@ -167,8 +186,8 @@ async function handleSubmit(event) {
 
     await saveParticipant(normalizedPhone, participantData);
 
-    showFormMessage('Participação registada com sucesso!', 'success');
     form.reset();
+    showNextSteps();
   } catch (error) {
     console.error('❌ Erro ao registar participante:', error);
     showFormMessage(getErrorMessage(error), 'error');

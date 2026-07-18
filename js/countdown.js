@@ -145,6 +145,43 @@ function calculateRemainingTime() {
 
 /*
 |--------------------------------------------------------------------------
+| Esconder formulário e mostrar mensagem de encerrado
+|--------------------------------------------------------------------------
+*/
+
+function showPromotionClosedMessage() {
+
+
+    const formWrapper =
+        document.querySelector(".form-wrapper");
+
+
+    const closedMessage =
+        document.getElementById("promotionClosedMessage");
+
+
+
+    if (formWrapper) {
+
+        formWrapper.style.display = "none";
+
+    }
+
+
+
+    if (closedMessage) {
+
+        closedMessage.style.display = "block";
+
+    }
+
+
+}
+
+
+
+/*
+|--------------------------------------------------------------------------
 | Finalizar contagem
 |--------------------------------------------------------------------------
 */
@@ -173,6 +210,10 @@ function finishCountdown() {
         seconds: 0
 
     });
+
+
+
+    showPromotionClosedMessage();
 
 
 

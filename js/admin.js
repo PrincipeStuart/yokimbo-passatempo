@@ -76,7 +76,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 telefone: data.phone || "-",
                 email: data.email || "-",
                 provincia: data.province || "-",
-                instagram: data.instagram || "-",
                 origem: data.origin || "-",
                 data: date,
                 status: data.status || "-"
@@ -249,7 +248,6 @@ function renderTable(searchTerm = "") {
                 p.nome.toLowerCase().includes(term) ||
                 p.telefone.toLowerCase().includes(term) ||
                 p.email.toLowerCase().includes(term) ||
-                p.instagram.toLowerCase().includes(term) ||
                 p.provincia.toLowerCase().includes(term)
 
             );
@@ -275,8 +273,6 @@ function renderTable(searchTerm = "") {
             <td>${participant.email}</td>
 
             <td>${participant.provincia}</td>
-
-            <td>${participant.instagram}</td>
 
             <td>${participant.origem}</td>
 
@@ -370,7 +366,7 @@ function exportCSV(){
 
 
     let csv =
-    "Nome,Telefone,Email,Provincia,Instagram,Origem,Data,Status\n";
+    "Nome,Telefone,Email,Provincia,Origem,Data,Status\n";
 
 
 
@@ -378,7 +374,7 @@ function exportCSV(){
 
 
         csv +=
-        `"${p.nome}","${p.telefone}","${p.email}","${p.provincia}","${p.instagram}","${p.origem}","${p.data}","${p.status}"\n`;
+        `"${p.nome}","${p.telefone}","${p.email}","${p.provincia}","${p.origem}","${p.data}","${p.status}"\n`;
 
 
     });
@@ -566,8 +562,6 @@ function showWinnersModal(winners) {
 
             <p><strong>Email:</strong> ${winner.email}</p>
 
-            <p><strong>Instagram:</strong> ${winner.instagram}</p>
-
             <p><strong>Província:</strong> ${winner.provincia}</p>
 
             <p><strong>Data:</strong> ${winner.data}</p>
@@ -641,8 +635,6 @@ function copyWinnersToClipboard() {
         text += `Telefone: ${winner.telefone}\n`;
 
         text += `Email: ${winner.email}\n`;
-
-        text += `Instagram: ${winner.instagram}\n`;
 
         text += `Província: ${winner.provincia}\n`;
 

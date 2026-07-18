@@ -8,7 +8,11 @@ import {
     getFirestore
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import {
-    getAuth
+    getAuth,
+    setPersistence,
+    browserLocalPersistence,
+    browserSessionPersistence,
+    inMemoryPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 // Configuração Firebase Yokimbo
@@ -29,6 +33,33 @@ const db = getFirestore(app);
 
 // Criar ligação Authentication
 const auth = getAuth(app);
+
+// ==========================================
+// PERSISTÊNCIA COM FALLBACK
+// ==========================================
+// Alguns navegadores móveis bloqueiam o acesso a
+// IndexedDB/localStorage de terceiros, o que impede
+// o Firebase Auth de guardar a sessão e faz o
+// onAuthStateChanged nunca responder. Tentamos
+// localStorage primeiro, depois sessionStorage,
+// e por fim memória (a sessão não sobrevive a fechar
+// o separador, mas pelo menos a autenticação funciona).
+setPersistence(auth, browserLocalPersistence).catch(() => {
+
+    setPersistence(auth, browserSessionPersistence).catch(() => {
+
+        setPersistence(auth, inMemoryPersistence).catch((error) => {
+
+            console.error(
+                "Erro ao configurar persistência de autenticação:",
+                error
+            );
+
+        });
+
+    });
+
+});
 
 // Exportar para outros ficheiros
 export { db, auth };

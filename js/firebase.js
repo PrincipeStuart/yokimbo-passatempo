@@ -1,15 +1,15 @@
-
 // ==========================================
 // FIREBASE CONFIGURATION - YOKIMBO PASSATEMPO
 // ==========================================
 
 // Importações Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import { 
-    getFirestore 
+import {
+    getFirestore
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
+import {
+    getAuth
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 // Configuração Firebase Yokimbo
 const firebaseConfig = {
@@ -21,17 +21,16 @@ const firebaseConfig = {
     appId: "1:478275775549:web:74479f3bb583ecb8c6ce54"
 };
 
-
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-
 
 // Criar ligação Firestore
 const db = getFirestore(app);
 
+// Criar ligação Authentication
+const auth = getAuth(app);
 
 // Exportar para outros ficheiros
-export { db };
-
+export { db, auth };
 
 console.log("🔥 Firebase conectado com sucesso");

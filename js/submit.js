@@ -159,3 +159,214 @@ phone,
 email
 }
 );
+console.log(
+"Dados:",
+{
+fullName,
+phone,
+email
+}
+);
+// ==================================================
+// Validação básica
+// ==================================================
+
+
+if(
+!fullName ||
+!phone ||
+!email ||
+!province ||
+!origin
+){
+
+    alert(
+    "Preencha todos os campos obrigatórios."
+    );
+
+
+    resetButton();
+
+    return;
+
+}
+
+
+
+
+// ==================================================
+// Verificar duplicação por telefone
+// ==================================================
+
+
+try{
+
+
+const phoneRef =
+doc(
+db,
+"participants",
+phone
+);
+
+
+
+const existingPhone =
+await getDoc(phoneRef);
+
+
+
+if(existingPhone.exists()){
+
+
+    alert(
+    "Este número já possui uma participação registada."
+    );
+
+
+    resetButton();
+
+    return;
+
+
+}
+
+
+
+
+// ==================================================
+// Verificar duplicação por email
+// ==================================================
+
+
+const emailQuery =
+query(
+collection(db,"participants"),
+where(
+"email",
+"==",
+email
+)
+);
+
+
+
+const emailSnapshot =
+await getDocs(emailQuery);
+
+
+
+if(
+!emailSnapshot.empty
+){
+
+
+    alert(
+    "Este email já possui uma participação registada."
+    );
+
+
+    resetButton();
+
+    return;
+
+
+}
+
+
+
+
+// ==================================================
+// Criar participação
+// ==================================================
+
+
+const participantData = {
+
+
+    fullName: fullName,
+
+
+    phone: phone,
+
+
+    email: email,
+
+
+    instagram: instagram,
+
+
+    province: province,
+
+
+    origin: origin,
+
+
+    status: "active",
+
+
+    createdAt:
+    serverTimestamp()
+
+
+};
+
+
+
+
+
+await setDoc(
+phoneRef,
+participantData
+);
+
+
+
+console.log(
+"✅ Participação guardada com sucesso"
+);
+
+
+
+
+alert(
+"Participação enviada com sucesso!"
+);
+
+
+
+// Limpar formulário
+
+form.reset();
+
+
+
+resetButton();
+
+
+
+
+}catch(error){
+
+
+console.error(
+"❌ Erro ao guardar participação:",
+error
+);
+
+
+
+alert(
+"Ocorreu um erro ao enviar. Tente novamente."
+);
+
+
+
+resetButton();
+
+
+}
+
+
+
+});

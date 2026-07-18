@@ -307,26 +307,10 @@ function updateCounters() {
 
     const totalEl = document.getElementById("total");
 
-    const activeEl = document.getElementById("activeCount");
-
-
 
     if(totalEl){
 
         totalEl.textContent = participantsData.length;
-
-    }
-
-
-
-    if(activeEl){
-
-        const activeCount = participantsData.filter(
-            (p) => p.status === "active"
-        ).length;
-
-
-        activeEl.textContent = activeCount;
 
     }
 

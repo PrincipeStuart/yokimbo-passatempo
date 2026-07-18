@@ -53,15 +53,6 @@ const VALIDATION_RULES = {
     },
 
 
-    instagram: {
-
-        required: true,
-
-        error: "error-instagram"
-
-    },
-
-
     origin: {
 
         required: true,
@@ -217,31 +208,6 @@ function validatePhone(value) {
 
 
     return /^2449\d{8}$/.test(phone);
-
-
-}
-
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Normalizar Instagram
-|--------------------------------------------------------------------------
-*/
-
-function normalizeInstagram(value) {
-
-
-    return value
-
-        .replace("@", "")
-
-        .replace(/\s/g, "")
-
-        .toLowerCase()
-
-        .trim();
 
 
 }
@@ -421,43 +387,6 @@ function validateField(fieldName) {
 
             return false;
 
-
-        }
-
-
-    }
-
-
-
-
-    /*
-    -------------------------------
-    Instagram
-    -------------------------------
-    */
-
-
-    if (fieldName === "instagram") {
-
-
-        element.value =
-            normalizeInstagram(value);
-
-
-
-        if (
-            !/^[a-z0-9._]{1,30}$/
-            .test(element.value)
-        ) {
-
-
-            showFieldError(
-                fieldName,
-                "Instagram inválido."
-            );
-
-
-            return false;
 
         }
 

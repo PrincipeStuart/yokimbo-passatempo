@@ -108,6 +108,19 @@ async function saveParticipant(normalizedPhone, data) {
   });
 }
 
+// ==================================================
+// MODO DIAGNÓSTICO TEMPORÁRIO
+// Mostra o erro técnico real no ecrã para conseguirmos
+// identificar a causa exata em dispositivos móveis,
+// sem depender da consola do browser.
+// Remover depois de confirmada a causa.
+// ==================================================
+function getDiagnosticErrorMessage(error) {
+  const code = error && error.code ? error.code : 'sem-codigo';
+  const msg = error && error.message ? error.message : String(error);
+  return `Erro técnico (diagnóstico): [${code}] ${msg}`;
+}
+
 async function handleSubmit(event) {
   event.preventDefault();
 
@@ -160,7 +173,8 @@ async function handleSubmit(event) {
     showFormMessage('Participação registada com sucesso!', 'success');
     form.reset();
   } catch (error) {
-    showFormMessage('Ocorreu um erro ao registar a participação. Tente novamente.', 'error');
+    console.error('❌ Erro ao registar participante:', error);
+    showFormMessage(getDiagnosticErrorMessage(error), 'error');
   } finally {
     isSubmitting = false;
     setSubmittingState(submitButton, false);

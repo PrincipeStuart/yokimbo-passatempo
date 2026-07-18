@@ -43,6 +43,7 @@
             margin-bottom: 10px;
             font-size: 14px;
             color: #333;
+            flex-wrap: wrap;
 
         }
 
@@ -113,9 +114,21 @@
         }
 
 
+        .table-wrapper {
+
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 12px;
+            background: white;
+
+        }
+
+
         table {
 
             width: 100%;
+            min-width: 700px;
             border-collapse: collapse;
             background: white;
             border-radius: 12px;
@@ -130,6 +143,7 @@
             color: white;
             padding: 12px;
             text-align: left;
+            white-space: nowrap;
 
         }
 
@@ -138,6 +152,7 @@
 
             padding: 10px;
             border-bottom: 1px solid #ddd;
+            white-space: nowrap;
 
         }
 
@@ -162,12 +177,6 @@
             table {
 
                 font-size:12px;
-
-            }
-
-            .stats-row {
-
-                flex-direction: column;
 
             }
 
@@ -383,16 +392,6 @@ Verificando acesso...
 
     </div>
 
-    <div class="stats">
-
-        <p>Participantes ativos</p>
-
-        <strong id="activeCount">
-            0
-        </strong>
-
-    </div>
-
 </div>
 
 
@@ -415,6 +414,8 @@ Verificando acesso...
 </div>
 
 
+
+<div class="table-wrapper">
 
 <table id="participantsTable" style="display:none;">
 
@@ -443,6 +444,8 @@ Verificando acesso...
 
 
 </table>
+
+</div>
 
 
 

@@ -108,17 +108,14 @@ async function saveParticipant(normalizedPhone, data) {
   });
 }
 
-// ==================================================
-// MODO DIAGNÓSTICO TEMPORÁRIO
-// Mostra o erro técnico real no ecrã para conseguirmos
-// identificar a causa exata em dispositivos móveis,
-// sem depender da consola do browser.
-// Remover depois de confirmada a causa.
-// ==================================================
-function getDiagnosticErrorMessage(error) {
-  const code = error && error.code ? error.code : 'sem-codigo';
-  const msg = error && error.message ? error.message : String(error);
-  return `Erro técnico (diagnóstico): [${code}] ${msg}`;
+function getErrorMessage(error) {
+  if (error && error.code === 'permission-denied') {
+    return 'Não foi possível registar a participação (permissão negada). Contacte o suporte.';
+  }
+  if (error && error.code === 'unavailable') {
+    return 'Sem ligação ao servidor. Verifique a sua internet e tente novamente.';
+  }
+  return 'Ocorreu um erro ao registar a participação. Tente novamente.';
 }
 
 async function handleSubmit(event) {
@@ -174,7 +171,7 @@ async function handleSubmit(event) {
     form.reset();
   } catch (error) {
     console.error('❌ Erro ao registar participante:', error);
-    showFormMessage(getDiagnosticErrorMessage(error), 'error');
+    showFormMessage(getErrorMessage(error), 'error');
   } finally {
     isSubmitting = false;
     setSubmittingState(submitButton, false);

@@ -12,7 +12,39 @@ import {
 
 
 
+let authResolved = false;
+
+
+
+// ==================================================
+// TIMEOUT DE SEGURANÇA
+// Se o Firebase não responder em 8 segundos (ex: storage
+// bloqueado em navegadores móveis), redireciona para o
+// login em vez de ficar preso em "Verificando acesso...".
+// ==================================================
+
+const authTimeout = setTimeout(() => {
+
+    if (!authResolved) {
+
+        console.error(
+            "⏱️ Tempo excedido a verificar sessão. A redirecionar para login."
+        );
+
+        window.location.href = "login.html";
+
+    }
+
+}, 8000);
+
+
+
 onAuthStateChanged(auth, (user) => {
+
+
+    authResolved = true;
+
+    clearTimeout(authTimeout);
 
 
     const loading = document.getElementById("authLoading");

@@ -1,7 +1,6 @@
 // ==================================================
 // SUBMIT.JS
 // Yokimbo Passatempo v1.0
-// Envio de participações para Firestore
 // ==================================================
 
 
@@ -21,41 +20,41 @@ import {
 
 
 
+console.log(
+"🚀 Submit Yokimbo iniciado"
+);
 
-// ==================================================
-// Inicialização
-// ==================================================
 
-
-console.log("🚀 Submit Yokimbo iniciado");
 
 
 
 const form =
-document.getElementById("participationForm");
+document.getElementById(
+"participationForm"
+);
 
 
 
 const submitButton =
 document.querySelector(
-    "button[type='submit']"
+"button[type='submit']"
 );
+
+
 
 
 
 if(!form){
 
-    console.error(
-        "❌ Formulário não encontrado"
-    );
+console.error(
+"❌ Formulário não encontrado"
+);
 
 }
 
 
 
-// ==================================================
-// Evento de envio
-// ==================================================
+
 
 
 if(form){
@@ -63,7 +62,7 @@ if(form){
 
 form.addEventListener(
 "submit",
-async function(event){
+async (event)=>{
 
 
 event.preventDefault();
@@ -71,19 +70,18 @@ event.preventDefault();
 
 
 console.log(
-"📩 Formulário enviado"
+"📩 Envio iniciado"
 );
 
 
 
-// Evitar duplo envio
 
 if(
 submitButton &&
 submitButton.disabled
 ){
 
-    return;
+return;
 
 }
 
@@ -91,16 +89,14 @@ submitButton.disabled
 
 if(submitButton){
 
-    submitButton.disabled = true;
+submitButton.disabled = true;
 
-    submitButton.textContent =
-    "Enviando...";
+submitButton.textContent =
+"Enviando...";
 
 }
 
 
-
-// Recolher dados
 
 
 const fullName =
@@ -139,28 +135,17 @@ document.getElementById("origin")
 
 
 
-const phoneInput =
+const phone =
+normalizePhone(
 document.getElementById("phone")
 .value
-.trim();
-
-
-
-const phone =
-normalizePhone(phoneInput);
-
-
-
-console.log(
-"Dados:",
-{
-fullName,
-phone,
-email
-}
+.trim()
 );
+
+
+
 console.log(
-"Dados:",
+"Dados recebidos:",
 {
 fullName,
 phone,
@@ -168,7 +153,7 @@ email
 }
 );
 // ==================================================
-// Validação básica
+// VALIDAÇÃO
 // ==================================================
 
 
@@ -180,29 +165,32 @@ if(
 !origin
 ){
 
-    alert(
-    "Preencha todos os campos obrigatórios."
-    );
+
+alert(
+"Preencha todos os campos obrigatórios."
+);
 
 
-    resetButton();
+resetButton();
 
-    return;
+return;
+
 
 }
 
 
 
 
-// ==================================================
-// Verificar duplicação por telefone
-// ==================================================
-
 
 try{
 
 
-const phoneRef =
+// ==================================================
+// Verificar telefone duplicado
+// ==================================================
+
+
+const participantRef =
 doc(
 db,
 "participants",
@@ -211,22 +199,26 @@ phone
 
 
 
-const existingPhone =
-await getDoc(phoneRef);
+const participantExists =
+await getDoc(
+participantRef
+);
 
 
 
-if(existingPhone.exists()){
+if(
+participantExists.exists()
+){
 
 
-    alert(
-    "Este número já possui uma participação registada."
-    );
+alert(
+"Este número já possui uma participação registada."
+);
 
 
-    resetButton();
+resetButton();
 
-    return;
+return;
 
 
 }
@@ -234,12 +226,13 @@ if(existingPhone.exists()){
 
 
 
+
 // ==================================================
-// Verificar duplicação por email
+// Verificar email duplicado
 // ==================================================
 
 
-const emailQuery =
+const emailCheck =
 query(
 collection(db,"participants"),
 where(
@@ -251,24 +244,26 @@ email
 
 
 
-const emailSnapshot =
-await getDocs(emailQuery);
+const emailResult =
+await getDocs(
+emailCheck
+);
 
 
 
 if(
-!emailSnapshot.empty
+!emailResult.empty
 ){
 
 
-    alert(
-    "Este email já possui uma participação registada."
-    );
+alert(
+"Este email já possui uma participação registada."
+);
 
 
-    resetButton();
+resetButton();
 
-    return;
+return;
 
 
 }
@@ -276,37 +271,68 @@ if(
 
 
 
+
 // ==================================================
-// Criar participação
+// Criar dados
 // ==================================================
 
 
 const participantData = {
 
 
-    fullName: fullName,
+fullName:
 
 
-    phone: phone,
+fullName,
 
 
-    email: email,
+
+phone:
 
 
-    instagram: instagram,
+phone,
 
 
-    province: province,
+
+email:
 
 
-    origin: origin,
+email,
 
 
-    status: "active",
+
+instagram:
 
 
-    createdAt:
-    serverTimestamp()
+instagram,
+
+
+
+province:
+
+
+province,
+
+
+
+origin:
+
+
+origin,
+
+
+
+status:
+
+
+"active",
+
+
+
+createdAt:
+
+
+serverTimestamp()
 
 
 };
@@ -315,17 +341,26 @@ const participantData = {
 
 
 
+
+// ==================================================
+// Guardar no Firestore
+// ==================================================
+
+
 await setDoc(
-phoneRef,
+
+participantRef,
+
 participantData
+
 );
 
 
 
 console.log(
-"✅ Participação guardada com sucesso"
+"✅ Participação guardada:",
+participantData
 );
-
 
 
 
@@ -335,8 +370,6 @@ alert(
 
 
 
-// Limpar formulário
-
 form.reset();
 
 
@@ -344,13 +377,12 @@ form.reset();
 resetButton();
 
 
-
-
-}catch(error){
+}
+catch(error){
 
 
 console.error(
-"❌ Erro ao guardar participação:",
+"❌ Erro ao enviar participação:",
 error
 );
 
@@ -370,8 +402,18 @@ resetButton();
 
 
 });
+
+
+
+}
+
+
+
+
+
+
 // ==================================================
-// Normalização do telefone
+// Normalizar telefone
 // ==================================================
 
 
@@ -379,6 +421,7 @@ function normalizePhone(phone){
 
 
 let clean =
+
 phone.replace(
 /[^0-9]/g,
 ""
@@ -386,36 +429,36 @@ phone.replace(
 
 
 
-// Número já com código Angola
-
 if(
 clean.startsWith("244")
 ){
 
+
 return "+" + clean;
+
 
 }
 
 
-
-// Número começa apenas com 9
 
 if(
 clean.startsWith("9")
 ){
 
+
 return "+244" + clean;
+
 
 }
 
 
-
-// Fallback
 
 return "+" + clean;
 
 
 }
+
+
 
 
 
@@ -435,23 +478,23 @@ if(submitButton){
 submitButton.disabled = false;
 
 
+
 submitButton.textContent =
+
 "Participar Agora";
 
 
 }
 
 
-
 }
 
 
 
-// ==================================================
-// Fim do Submit.js
-// ==================================================
 
 
 console.log(
-"✅ Submit Yokimbo carregado"
+"✅ Submit Yokimbo carregado corretamente"
 );
+
+

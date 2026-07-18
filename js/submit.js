@@ -116,7 +116,53 @@ return;
 
 }
 
+// ==========================================
+// VERIFICAÇÃO DE PARTICIPAÇÃO DUPLICADA
+// ==========================================
 
+
+// Verificar email existente
+
+const emailQuery = query(
+    collection(db, "participants"),
+    where("email", "==", participantData.email)
+);
+
+
+const emailSnapshot = await getDocs(emailQuery);
+
+
+
+if (!emailSnapshot.empty) {
+
+    throw new Error(
+        "Este email já participou no passatempo."
+    );
+
+}
+
+
+
+
+// Verificar telefone existente
+
+const phoneQuery = query(
+    collection(db, "participants"),
+    where("phone", "==", participantData.phone)
+);
+
+
+const phoneSnapshot = await getDocs(phoneQuery);
+
+
+
+if (!phoneSnapshot.empty) {
+
+    throw new Error(
+        "Este telefone já participou no passatempo."
+    );
+
+}
 
 // Criar participação
 
@@ -161,25 +207,35 @@ form.reset();
 
 
 
-}
 catch(error){
 
-
-console.error(
-"❌ Erro ao enviar participação:",
-error
-);
-
+    console.error(
+        "❌ Erro ao enviar participação:",
+        error
+    );
 
 
-alert(
-"Ocorreu um erro ao enviar. Tente novamente."
-);
+    // Mostrar mensagens específicas
+    if(
+        error.message &&
+        (
+            error.message.includes("email já participou") ||
+            error.message.includes("telefone já participou")
+        )
+    ){
+
+        alert(error.message);
+        return;
+
+    }
 
 
+    // Outros erros
+    alert(
+        "Ocorreu um erro ao enviar. Tente novamente."
+    );
 
 }
-
 
 
 });

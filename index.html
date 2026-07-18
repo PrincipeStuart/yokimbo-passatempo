@@ -125,6 +125,22 @@
     <section class="form-section" id="form-section">
         <div class="container">
             <h2 class="section-title">Formulário de Participação</h2>
+
+            <!-- Mensagem exibida quando o countdown chega a zero -->
+            <div id="promotionClosedMessage" style="
+display:none;
+text-align:center;
+background:white;
+border-radius:12px;
+padding:40px 20px;
+max-width:600px;
+margin:0 auto;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+">
+                <h3 style="color:#2FA84F; margin-top:0;">Passatempo Encerrado</h3>
+                <p style="color:#333; margin-bottom:0;">O período de participação terminou. Obrigado a todos que participaram!</p>
+            </div>
+
             <div class="form-wrapper">
                 <form id="participationForm" class="form">
                     
@@ -280,7 +296,7 @@
 
    <script src="js/config.js?v=2"></script>
 
-<script src="js/countdown.js?v=2"></script>
+<script src="js/countdown.js?v=3"></script>
 <script src="js/validation.js?v=2"></script>
 
 <script type="module" src="js/firebase.js?v=2"></script>

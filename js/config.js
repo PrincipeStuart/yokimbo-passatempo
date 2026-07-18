@@ -13,7 +13,6 @@
 | Todas as configurações da aplicação ficam neste objeto.
 | Os restantes ficheiros utilizam estas configurações.
 */
-
 const APP_CONFIG = {
 
     /*
@@ -30,15 +29,10 @@ const APP_CONFIG = {
     | API
     |--------------------------------------------------------------------------
     */
-
     api: {
-
         url: "https://seu-backend.com/api/participacao",
-
         method: "POST",
-
         timeout: 30000
-
     },
 
     /*
@@ -46,13 +40,9 @@ const APP_CONFIG = {
     | Cloudflare Turnstile
     |--------------------------------------------------------------------------
     */
-
     turnstile: {
-
         enabled: true,
-
         siteKey: "SEU_SITEKEY_AQUI"
-
     },
 
     /*
@@ -60,11 +50,8 @@ const APP_CONFIG = {
     | Contagem Regressiva
     |--------------------------------------------------------------------------
     */
-
     countdown: {
-
         endDate: "2026-07-31T23:59:59"
-
     },
 
     /*
@@ -72,11 +59,8 @@ const APP_CONFIG = {
     | Redirecionamento após sucesso
     |--------------------------------------------------------------------------
     */
-
     redirect: {
-
         successPage: "obrigado.html"
-
     },
 
     /*
@@ -85,11 +69,8 @@ const APP_CONFIG = {
     |--------------------------------------------------------------------------
     | Utilizado apenas em desenvolvimento.
     */
-
     storage: {
-
         entriesKey: "yokimbo_dev_entries"
-
     },
 
     /*
@@ -97,15 +78,10 @@ const APP_CONFIG = {
     | Animações
     |--------------------------------------------------------------------------
     */
-
     animation: {
-
         scrollBehavior: "smooth",
-
         successDelay: 1500
-
     }
-
 };
 
 /* ===========================================================
@@ -116,39 +92,28 @@ const APP_CONFIG = {
  * Verifica se está em desenvolvimento.
  */
 function isDevelopment() {
-
     return APP_CONFIG.environment === "development";
-
 }
 
 /**
  * Verifica se está em produção.
  */
 function isProduction() {
-
     return APP_CONFIG.environment === "production";
-
 }
 
 /**
  * Retorna a data final do passatempo.
  */
 function getPromotionEndDate() {
-
     return new Date(APP_CONFIG.countdown.endDate);
-
 }
 
 /**
  * Escreve informação do ambiente na consola.
  */
-
 console.group("Yokimbo Passatempo");
-
 console.log("Ambiente:", APP_CONFIG.environment);
-
 console.log("API:", APP_CONFIG.api.url);
-
 console.log("Turnstile:", APP_CONFIG.turnstile.enabled ? "Ativo" : "Desativado");
-
 console.groupEnd();

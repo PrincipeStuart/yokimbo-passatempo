@@ -1,13 +1,18 @@
 // ==================================================
-// SUBMIT.JS - ENVIO DE PARTICIPAÇÕES YOKIMBO
-// Com proteção contra duplicados por telefone
+// SUBMIT.JS
+// Yokimbo Passatempo v1.0
+// Envio de participações para Firestore
 // ==================================================
+
 
 import { db } from "./firebase.js";
 
+
 import {
+    doc,
+    setDoc,
+    getDoc,
     collection,
-    addDoc,
     query,
     where,
     getDocs,
@@ -16,12 +21,41 @@ import {
 
 
 
-console.log("✅ Submit iniciado");
+
+// ==================================================
+// Inicialização
+// ==================================================
+
+
+console.log("🚀 Submit Yokimbo iniciado");
 
 
 
-const form = document.getElementById("participationForm");
+const form =
+document.getElementById("participationForm");
 
+
+
+const submitButton =
+document.querySelector(
+    "button[type='submit']"
+);
+
+
+
+if(!form){
+
+    console.error(
+        "❌ Formulário não encontrado"
+    );
+
+}
+
+
+
+// ==================================================
+// Evento de envio
+// ==================================================
 
 
 if(form){
@@ -29,43 +63,88 @@ if(form){
 
 form.addEventListener(
 "submit",
-async (event)=>{
+async function(event){
 
 
 event.preventDefault();
 
 
 
-try{
+console.log(
+"📩 Formulário enviado"
+);
+
+
+
+// Evitar duplo envio
+
+if(
+submitButton &&
+submitButton.disabled
+){
+
+    return;
+
+}
+
+
+
+if(submitButton){
+
+    submitButton.disabled = true;
+
+    submitButton.textContent =
+    "Enviando...";
+
+}
+
+
+
+// Recolher dados
 
 
 const fullName =
-document.getElementById("fullName").value.trim();
+document.getElementById("fullName")
+.value
+.trim();
+
 
 
 const email =
-document.getElementById("email").value.trim();
+document.getElementById("email")
+.value
+.trim()
+.toLowerCase();
 
-
-const phoneInput =
-document.getElementById("phone").value.trim();
-
-
-const province =
-document.getElementById("province").value;
 
 
 const instagram =
-document.getElementById("instagram").value.trim();
+document.getElementById("instagram")
+.value
+.trim();
+
+
+
+const province =
+document.getElementById("province")
+.value
+.trim();
+
 
 
 const origin =
-document.getElementById("origin").value;
+document.getElementById("origin")
+.value
+.trim();
 
 
 
+const phoneInput =
+document.getElementById("phone")
+.value
+.trim();
 
-// Normalizar telefone
+
 
 const phone =
 normalizePhone(phoneInput);
@@ -73,213 +152,10 @@ normalizePhone(phoneInput);
 
 
 console.log(
-"Telefone normalizado:",
-phone
-);
-
-
-
-// Verificar duplicado
-
-const participantsRef =
-collection(db,"participants");
-
-
-
-const phoneQuery =
-query(
-participantsRef,
-where(
-"phone",
-"==",
-phone
-)
-);
-
-
-
-const existing =
-await getDocs(phoneQuery);
-
-
-
-if(!existing.empty){
-
-
-alert(
-"Este número já possui uma participação registada."
-);
-
-
-return;
-
-
-}
-
-// ==========================================
-// VERIFICAÇÃO DE PARTICIPAÇÃO DUPLICADA
-// ==========================================
-
-
-// Verificar email existente
-
-const emailQuery = query(
-    collection(db, "participants"),
-    where("email", "==", participantData.email)
-);
-
-
-const emailSnapshot = await getDocs(emailQuery);
-
-
-
-if (!emailSnapshot.empty) {
-
-    throw new Error(
-        "Este email já participou no passatempo."
-    );
-
-}
-
-
-
-
-// Verificar telefone existente
-
-const phoneQuery = query(
-    collection(db, "participants"),
-    where("phone", "==", participantData.phone)
-);
-
-
-const phoneSnapshot = await getDocs(phoneQuery);
-
-
-
-if (!phoneSnapshot.empty) {
-
-    throw new Error(
-        "Este telefone já participou no passatempo."
-    );
-
-}
-
-// Criar participação
-
-
-await addDoc(
-participantsRef,
+"Dados:",
 {
-
-
 fullName,
-
-email,
-
 phone,
-
-province,
-
-instagram,
-
-origin,
-
-
-status:"active",
-
-
-createdAt:
-serverTimestamp()
-
-
+email
 }
 );
-
-
-
-alert(
-"Participação enviada com sucesso!"
-);
-
-
-
-form.reset();
-
-
-
-catch(error){
-
-    console.error(
-        "❌ Erro ao enviar participação:",
-        error
-    );
-
-
-    // Mostrar mensagens específicas
-    if(
-        error.message &&
-        (
-            error.message.includes("email já participou") ||
-            error.message.includes("telefone já participou")
-        )
-    ){
-
-        alert(error.message);
-        return;
-
-    }
-
-
-    // Outros erros
-    alert(
-        "Ocorreu um erro ao enviar. Tente novamente."
-    );
-
-}
-
-
-});
-
-
-
-}
-
-
-
-
-
-function normalizePhone(phone){
-
-
-let clean =
-phone.replace(
-/[^0-9]/g,
-""
-);
-
-
-
-if(
-clean.startsWith("244")
-){
-
-return "+" + clean;
-
-}
-
-
-
-if(
-clean.startsWith("9")
-){
-
-return "+244" + clean;
-
-}
-
-
-
-return "+" + clean;
-
-
-}

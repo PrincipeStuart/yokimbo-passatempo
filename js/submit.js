@@ -101,7 +101,6 @@ async function saveParticipant(normalizedPhone, data) {
     phone: normalizedPhone,
     email: data.email,
     province: data.province,
-    instagram: data.instagram,
     origin: data.origin,
     status: 'active',
     createdAt: serverTimestamp()
@@ -164,7 +163,6 @@ async function handleSubmit(event) {
     fullName: getFieldValue('fullName'),
     email: getFieldValue('email'),
     province: getFieldValue('province'),
-    instagram: getFieldValue('instagram'),
     origin: getFieldValue('origin')
   };
 

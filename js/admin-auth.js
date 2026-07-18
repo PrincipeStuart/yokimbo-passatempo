@@ -76,36 +76,21 @@ onAuthStateChanged(auth, (user) => {
 // LOGOUT
 // ==================================================
 
-function initLogout() {
+async function handleLogout() {
 
 
-    const logoutBtn = document.getElementById("logoutBtn");
+    try {
 
+        await signOut(auth);
 
-    if (logoutBtn) {
+        window.location.href = "login.html";
 
+    } catch (error) {
 
-        logoutBtn.addEventListener("click", async () => {
-
-
-            try {
-
-                await signOut(auth);
-
-                window.location.href = "login.html";
-
-            } catch (error) {
-
-                console.error(
-                    "Erro ao terminar sessão:",
-                    error
-                );
-
-            }
-
-
-        });
-
+        console.error(
+            "Erro ao terminar sessão:",
+            error
+        );
 
     }
 
@@ -114,4 +99,24 @@ function initLogout() {
 
 
 
-initLogout();
+document.addEventListener("click", (event) => {
+
+
+    const target = event.target;
+
+
+    if (!target) {
+
+        return;
+
+    }
+
+
+    if (target.id === "logoutBtn") {
+
+        handleLogout();
+
+    }
+
+
+});

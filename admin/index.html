@@ -67,6 +67,95 @@
         }
 
 
+        .actions-group {
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            max-width: 420px;
+            margin: 0 auto 15px auto;
+
+        }
+
+
+        .action-btn {
+
+            background: #2FA84F;
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+
+        }
+
+
+        .action-btn:hover {
+
+            opacity: 0.85;
+
+        }
+
+
+        .actions-draw {
+
+            background: white;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+
+
+        .actions-draw-label {
+
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #999;
+            margin-bottom: 12px;
+            font-weight: bold;
+            text-align: center;
+
+        }
+
+
+        .actions-draw-buttons {
+
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+
+        }
+
+
+        .draw-btn {
+
+            background: #2FA84F;
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            flex: 1 1 150px;
+
+        }
+
+
+        .draw-btn:hover {
+
+            opacity: 0.85;
+
+        }
+
+
         .stats-row {
 
             display: flex;
@@ -183,32 +272,24 @@
         }
 
 
-        .actions {
+        @media(max-width:600px){
 
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
+            .actions-draw-buttons {
 
-        }
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
 
-
-        .actions button {
-
-            background: #2FA84F;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-
-        }
+            }
 
 
-        .actions button:hover {
+            .draw-btn {
 
-            opacity: 0.85;
+                font-size: 11px;
+                padding: 10px 4px;
+                flex: none;
+
+            }
 
         }
 
@@ -355,27 +436,39 @@ Verificando acesso...
     Painel de Participantes Yokimbo
 </h1>
 
-<div class="actions">
+<div class="actions-group">
 
-    <button id="exportBtn">
+    <button id="exportBtn" class="action-btn">
         Exportar CSV
     </button>
 
-    <button onclick="location.reload()">
+    <button class="action-btn" onclick="location.reload()">
         Atualizar
     </button>
 
-    <button id="draw1Btn">
-        Sortear 1 vencedor
-    </button>
+</div>
 
-    <button id="draw3Btn">
-        Sortear 3 vencedores
-    </button>
+<div class="actions-draw">
 
-    <button id="draw5Btn">
-        Sortear 5 vencedores
-    </button>
+    <span class="actions-draw-label">
+        Sorteio
+    </span>
+
+    <div class="actions-draw-buttons">
+
+        <button id="draw1Btn" class="draw-btn">
+            Sortear 1 vencedor
+        </button>
+
+        <button id="draw3Btn" class="draw-btn">
+            Sortear 3 vencedores
+        </button>
+
+        <button id="draw5Btn" class="draw-btn">
+            Sortear 5 vencedores
+        </button>
+
+    </div>
 
 </div>
 
